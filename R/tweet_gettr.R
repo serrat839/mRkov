@@ -18,23 +18,37 @@ tweet_gettr <- function(handle, output = "") {
   tweets <- tweets$text
   tweets <- str_replace_all(tweets, "'", "")
   tweets <- str_replace_all(tweets, "\n", "newline")
-  
+
   # export the tweets here
   if (nchar(output) > 0) {
     fileConn <- file(output)
     writeLines(tweets, fileConn, sep = "\n")
     close(fileConn)
   }
-  
+
   # prep for make_sentencce
-  #  Add delimiters
+  # Add delimiters
   tweets <- paste(tweets, "ENDOFTWEET")
-  
+
   # tokenize the tweets
   token_list <- strsplit(corpus, " ")
+
   # get the first word of each tweet
+  firsts <- c()
+  for (sentence in token_list) {
+    # pick the first token for each entry in token_list
+    firsts <- c(firsts, sentence[1])
+  }
+
+  # make the token list into a vector
+  token_vector <- unlist(token_list)
+
   # create a lowercase tweet vector and a raw tweet vector
-  
-  return(tweets)
+  token_vector_lowercase <- stringr::str_to_lower(token_vector)
+
+  # create the list we want to return
+  data_list <- list(text=tweets, firsts=firsts, raw_tokens=token_vector, lowercase_tokens=token_vector_lowercase)
+
+  return(data_list)
 }
 
