@@ -4,12 +4,24 @@
 \alias{tweet_gettr}
 \title{Tweet GettR}
 \usage{
-tweet_gettr(handle, output = "")
+tweet_gettr(
+  handle,
+  output = "",
+  n = 3200,
+  includeRts = FALSE,
+  excludeReplies = TRUE
+)
 }
 \arguments{
 \item{handle}{The handle of the twitter user's timeline you wish to scrape.}
 
 \item{output}{The location of an output text file that you can re-use if you want a re-usable file of tweets. Defaults to a blank string, no output saved.}
+
+\item{n}{Integer. Defaults to `3200`. The number of tweets to pull.}
+
+\item{includeRts}{Boolean. Defaults to `FALSE`. Whether or not to include re-tweets.}
+
+\item{excludeReplies}{Boolean. Defaults to `TRUE`. Wehter or not to exclude replies.}
 }
 \value{
 Returns a properly-formatted list that you can run make_sentence on
