@@ -1,6 +1,7 @@
 #' Tweet GettR
 #'
 #' This function lets you scrape the timeline of any twitter user. You MUST run the setup function before using this function in order for it to work.
+#'
 #' @param handle The handle of the twitter user's timeline you wish to scrape.
 #' @param output The location of an output text file that you can re-use if you want a re-usable file of tweets. Defaults to a blank string, no output saved.
 #' @keywords Twitter, Scraping
@@ -14,7 +15,7 @@ tweet_gettr <- function(handle, output = "") {
   if (substr(handle,1,1) != '@') {
     handle <- paste('@', handle, sep = "")
   }
-  
+
   # Scrape handle's timeline.
   #  Exits if the twitter api is not setup
   tweets <- tryCatch(
@@ -24,7 +25,7 @@ tweet_gettr <- function(handle, output = "") {
       stop()
     }
   )
-  
+
   tweets <- twitteR::twListToDF(tweets)
   tweets <- tweets$text
   tweets <- stringr::str_replace_all(tweets, "'", "")
