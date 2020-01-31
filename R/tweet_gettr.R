@@ -1,6 +1,6 @@
 #' Tweet GettR
 #'
-#' This function lets you scrape the timeline of any twitter user.
+#' This function lets you scrape the timeline of any twitter user. You MUST run the setup function before using this function in order for it to work.
 #' @param handle The handle of the twitter user's timeline you wish to scrape.
 #' @param output The location of an output text file that you can re-use if you want a re-usable file of tweets. Defaults to a blank string, no output saved.
 #' @keywords Twitter, Scraping
