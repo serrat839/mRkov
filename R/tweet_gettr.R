@@ -5,19 +5,30 @@
 #' @param output The location of an output text file that you can re-use if you want a re-usable file of tweets. Defaults to a blank string, no output saved.
 #' @keywords Twitter, Scraping
 #' @return Returns a properly-formatted list that you can run make_sentence on
+#' @export
 #' @examples
-#' test_function("\@realDonaldTrump", "./trump.txt")
+#' test_function("@realDonaldTrump", "./trump.txt")
 
 tweet_gettr <- function(handle, output = "") {
   # Make sure that this is an @
   if (substr(handle,1,1) != '@') {
     handle <- paste('@', handle, sep = "")
   }
-  tweets <- twitteR::userTimeline(handle, n= 3200, includeRts = TRUE, excludeReplies = FALSE)
+  
+  # Scrape handle's timeline.
+  #  Exits if the twitter api is not setup
+  tweets <- tryCatch(
+    {twitteR::userTimeline(handle, n= 3200, includeRts = TRUE, excludeReplies = FALSE)},
+    error=function(cond) {
+      message("Error: Twitter api not setup. Please use setup_twitteR in order to scrape tweets from Twitter")
+      stop()
+    }
+  )
+  
   tweets <- twitteR::twListToDF(tweets)
   tweets <- tweets$text
-  tweets <- str_replace_all(tweets, "'", "")
-  tweets <- str_replace_all(tweets, "\n", "newline")
+  tweets <- stringr::str_replace_all(tweets, "'", "")
+  tweets <- stringr::str_replace_all(tweets, "\n", "newline")
 
   # export the tweets here
   if (nchar(output) > 0) {
@@ -31,7 +42,7 @@ tweet_gettr <- function(handle, output = "") {
   tweets <- paste(tweets, "ENDOFTWEET")
 
   # tokenize the tweets
-  token_list <- strsplit(corpus, " ")
+  token_list <- strsplit(tweets, " ")
 
   # get the first word of each tweet
   firsts <- c()

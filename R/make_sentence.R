@@ -10,63 +10,38 @@
 #' test_function()
 
 make_sentence <- function(corpus, prompt = "") {
-  # step one
-  corpus <- paste(corpus, "THISISTHEENDOFTHESENTENCE") # vector of sentences
-  
-  token_list <- strsplit(corpus, " ") # list of vectors of tokens
   
   # No prompt available
   if (nchar(prompt) == 0) {
-    # id first words and pick one
-    firsts <- c()
-    for (sentence in token_list) {
-      # pick the first token for each entry in token_list
-      firsts <- append(firsts, sentence[1])
-    }
-    
-    # randomly select one of our first tokens, saving the word and also adding it to our sentence
-    selected_word <- sample(firsts, 1)
-    sentence <- selected_word
+    selected_word <- sample(corpus$firsts, 1)
   } 
   
   # User prompted the sentence maker
   else {
     # determine if the prompt is IN our corpus
     regex_prompt <- paste('\\b', prompt, '\\b', sep = "")
-    prompt_is_valid <- F
-    for (sentence in token_list) {
-      if(!any(prompt_is_valid)) {
-        prompt_is_valid <- grepl(regex_prompt, sentence, ignore.case = T)
-      } else {
-        break
-      }
-      
-    }
+    prompt_is_valid <- grepl(regex_prompt, corpus$lowercase_tokens, ignore.case = T)
+    
     if (!any(prompt_is_valid)) {
       return("This prompt is bad!")
     }
-    # first word is prompt (or prompts last word)
+    
     selected_word <- prompt
-    sentence <- prompt
   }
+  sentence <- selected_word
+  print(sentence)
   
-  
-  # convert our list of vectors into a giant vector of tokens
-  token_list <- unlist(token_list)
-  # add a period to the end of our vector just for saftey
-  token_list <- append(token_list, ".")
-  # make our giant vector lowercase to avoid case sensitivity
-  lowercase_token_list <- str_to_lower(token_list) 
   words <- 0
   
-  while(!grepl('[!?]|THISISTHEENDOFTHESENTENCE', sentence)) {
-    matches <- append(c(F), str_to_lower(selected_word) == lowercase_token_list)
-    after_match <- token_list[matches]
+  while(!grepl('[!?]|ENDOFTWEET', sentence)) {
+    matches <- append(c(F), stringr::str_to_lower(selected_word) == corpus$lowercase_tokens)
+    print(matches)
+    after_match <- corpus$raw_tokens[matches]
     selected_word <- sample(after_match, 1)
     sentence <- paste(sentence, selected_word)
     words <- words + 1
   }
   
-  sentence <- str_replace(sentence, " THISISTHEENDOFTHESENTENCE", "")
+  sentence <- stringr::str_replace(sentence, " ENDOFTWEET", "")
   return(sentence)
 }
