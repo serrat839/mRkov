@@ -39,7 +39,6 @@ make_sentence <- function(corpus, prompt = "", sentiment = "", lazy_sentiment = 
   while(!grepl('[.!?]|ENDOFTWEET', sentence)) {
     matches <- append(c(F), stringr::str_to_lower(selected_word) == corpus$lowercase_tokens)
     after_match <- corpus[matches, ]
-    print(sentence)
     # No sentiment influence
     if (nchar(sentiment) == 0) {
       after_sentiment <- after_match
@@ -50,7 +49,6 @@ make_sentence <- function(corpus, prompt = "", sentiment = "", lazy_sentiment = 
       if (nrow(after_sentiment) == 0) {
         after_sentiment <- after_match
       }
-      print(after_sentiment)
     # Increase the ammount of tweets of a certain sentiment by amp
     } else {
 
@@ -59,7 +57,6 @@ make_sentence <- function(corpus, prompt = "", sentiment = "", lazy_sentiment = 
     selected_word <- sample(after_sentiment$raw_tokens, 1)
     sentence <- paste(sentence, selected_word)
     words <- words + 1
-    asdf <- readline(prompt = sentence)
   }
 
   sentence <- stringr::str_replace(sentence, " ENDOFTWEET", "")
