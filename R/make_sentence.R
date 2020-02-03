@@ -41,20 +41,23 @@ make_sentence <- function(corpus, prompt = "", sentiment = "", lazy_sentiment = 
     after_match <- corpus[matches, ]
     # No sentiment influence
     if (nchar(sentiment) == 0) {
-      after_sentiment <- after_match
+      after_sentiment <- after_match$raw_tokens
     # Only choose from the chosen sentiment. If the sentiment has no followups, pick from the standard one
     } else if(lazy_sentiment) {
-
-      after_sentiment <- after_match[after_match$sentiment == sentiment, ]
+      after_sentiment <- after_match[after_match$sentiment == sentiment, "raw_tokens"]
       if (nrow(after_sentiment) == 0) {
-        after_sentiment <- after_match
+        after_sentiment <- after_match$raw_tokens
       }
     # Increase the ammount of tweets of a certain sentiment by amp
     } else {
-
+      good_words <- after_match[after_match$sentiment == sentiment, "raw_tokens"]
+      after_sentiment <- c(after_match$raw_tokens, rep(good_words, amp))
+      print(good_words)
+      print(after_sentiment)
+      asdf <- readline(prompt="sentence")
     }
 
-    selected_word <- sample(after_sentiment$raw_tokens, 1)
+    selected_word <- sample(after_sentiment, 1)
     sentence <- paste(sentence, selected_word)
     words <- words + 1
   }
