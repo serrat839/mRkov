@@ -4,14 +4,14 @@
 \alias{make_sentence}
 \title{A test function!}
 \usage{
-make_sentence(corpus, prompt = "")
+make_sentence(corpus, prompt = "", sentiment = "", amp = 1, lazy_sentiment = T)
 }
 \arguments{
 \item{love}{Do you lvoe cats? Default to true}
 }
 \description{
 This function allows you to link your twitter to the twitter API
-If you don't have twitter api keys, go to https://developer.twitter.com/ and 
+If you don't have twitter api keys, go to https://developer.twitter.com/ and
 create an account. Then, go to create an app, fill out the form, and you should be able to access your very own keys and tokens.
 }
 \examples{

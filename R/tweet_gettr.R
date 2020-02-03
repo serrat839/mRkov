@@ -50,21 +50,22 @@ tweet_gettr <- function(handle, output = "", n = 3200,
   # tokenize the tweets
   token_list <- strsplit(tweets, " ")
 
-  # get the first word of each tweet
-  firsts <- c()
-  for (sentence in token_list) {
-    # pick the first token for each entry in token_list
-    firsts <- c(firsts, sentence[1])
-  }
-
   # make the token list into a vector
-  token_vector <- unlist(token_list)
+  raw_tokens <- unlist(token_list)
 
-  # create a lowercase tweet vector and a raw tweet vector
-  token_vector_lowercase <- stringr::str_to_lower(token_vector)
+  # make a dataframe with lowercase(clean) tokens, raw tokens, and a column saying if it is a first word or not
+  tweet_data <- data.frame(raw_tokens, stringsAsFactors = F)
+  tweet_data$lowercase_tokens <- stringr::str_to_lower(tweet_data$raw_tokens)
+
+  firsts <- raw_tokens == "ENDOFTWEET"
+  firsts <- c(T, firsts[-length(firsts)])
+  tweet_data$firsts <- firsts
+
+  # add a sentiment column
+  tweet_data <- dplyr::left_join(tweet_data, tidytext::get_sentiments("bing"), by = c("lowercase_tokens" = "word"), name= "sentiment")
 
   # create the list we want to return
-  data_list <- list(text=tweets, firsts=firsts, raw_tokens=token_vector, lowercase_tokens=token_vector_lowercase)
+  data_list <- list(text=tweets, tokens=tweet_data)
 
   return(data_list)
 }
