@@ -1,15 +1,17 @@
-#' A test function!
+#' Make Sentence
 #'
-#' This function allows you to link your twitter to the twitter API
-#' If you don't have twitter api keys, go to https://developer.twitter.com/ and
-#' create an account. Then, go to create an app, fill out the form, and you should be able to access your very own keys and tokens.
-#' @param love Do you lvoe cats? Default to true
-#' @keywords cats
+#' This function allows you to create a sentence from a body of words loaded by this package
+#' @param corpus List. A list output by tweet_gettr.
+#' @param prompt String. A string containing a word to start the markov chain.
+#' @param sentiment String. The goal sentiment of the sentence.
+#' @param lazy_sentiment Boolean. The option to choose only from words that have the selected sentiment if applicable. If FALSE, it will increase words of the given sentiment by "amp" times.
+#' @param amp The number of times to increase words of the appropriate sentiment when lazy_sentiment is FALSE.
+#' @keywords sentence
 #' @export
 #' @examples
-#' test_function()
+#' make_sentence(corpus, prompt = "I", sentiment = "", lazy_sentiment = T, amp = 1)
 
-make_sentence <- function(corpus, prompt = "", sentiment = "", amp = 1, lazy_sentiment = T) {
+make_sentence <- function(corpus, prompt = "", sentiment = "", lazy_sentiment = T, amp = 1) {
   corpus <- corpus$tokens
 
   # No prompt available
@@ -34,19 +36,30 @@ make_sentence <- function(corpus, prompt = "", sentiment = "", amp = 1, lazy_sen
   sentence <- selected_word
   words <- 0
 
-  while(!grepl('[!?]|ENDOFTWEET', sentence)) {
+  while(!grepl('[.!?]|ENDOFTWEET', sentence)) {
     matches <- append(c(F), stringr::str_to_lower(selected_word) == corpus$lowercase_tokens)
     after_match <- corpus[matches, ]
-    if (lazy_sentiment) {
+    print(sentence)
+    # No sentiment influence
+    if (nchar(sentiment) == 0) {
+      after_sentiment <- after_match
+    # Only choose from the chosen sentiment. If the sentiment has no followups, pick from the standard one
+    } else if(lazy_sentiment) {
 
+      after_sentiment <- after_match[after_match$sentiment == sentiment, ]
+      if (nrow(after_sentiment) == 0) {
+        after_sentiment <- after_match
+      }
+      print(after_sentiment)
+    # Increase the ammount of tweets of a certain sentiment by amp
     } else {
 
     }
 
-
-    selected_word <- sample(after_match, 1)
+    selected_word <- sample(after_sentiment$raw_tokens, 1)
     sentence <- paste(sentence, selected_word)
     words <- words + 1
+    asdf <- readline(prompt = sentence)
   }
 
   sentence <- stringr::str_replace(sentence, " ENDOFTWEET", "")

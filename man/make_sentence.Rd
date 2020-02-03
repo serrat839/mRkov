@@ -2,19 +2,25 @@
 % Please edit documentation in R/make_sentence.R
 \name{make_sentence}
 \alias{make_sentence}
-\title{A test function!}
+\title{Make Sentence}
 \usage{
-make_sentence(corpus, prompt = "", sentiment = "", amp = 1, lazy_sentiment = T)
+make_sentence(corpus, prompt = "", sentiment = "", lazy_sentiment = T, amp = 1)
 }
 \arguments{
-\item{love}{Do you lvoe cats? Default to true}
+\item{corpus}{List. A list output by tweet_gettr.}
+
+\item{prompt}{String. A string containing a word to start the markov chain.}
+
+\item{sentiment}{String. The goal sentiment of the sentence.}
+
+\item{lazy_sentiment}{Boolean. The option to choose only from words that have the selected sentiment if applicable. If FALSE, it will increase words of the given sentiment by "amp" times.}
+
+\item{amp}{The number of times to increase words of the appropriate sentiment when lazy_sentiment is FALSE.}
 }
 \description{
-This function allows you to link your twitter to the twitter API
-If you don't have twitter api keys, go to https://developer.twitter.com/ and
-create an account. Then, go to create an app, fill out the form, and you should be able to access your very own keys and tokens.
+This function allows you to create a sentence from a body of words loaded by this package
 }
 \examples{
-test_function()
+make_sentence(corpus, prompt = "I", sentiment = "", lazy_sentiment = T, amp = 1)
 }
-\keyword{cats}
+\keyword{sentence}

@@ -64,6 +64,9 @@ tweet_gettr <- function(handle, output = "", n = 3200,
   # add a sentiment column
   tweet_data <- dplyr::left_join(tweet_data, tidytext::get_sentiments("bing"), by = c("lowercase_tokens" = "word"), name= "sentiment")
 
+  # change sentiment rows with na to be some other blank option
+  tweet_data[is.na(tweet_data$sentiment), "sentiment"] <- "no_sentiment"
+
   # create the list we want to return
   data_list <- list(text=tweets, tokens=tweet_data)
 
