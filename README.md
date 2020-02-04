@@ -1,16 +1,26 @@
-this is a markov chain twitter package
+# Insert clever name here!
 
-i am too lazy to write a good readme right now
+This is a markov chain twitter package.
+Using the twitteR package, it scrapes a twitter handle that you can query to randomly generate sentences from!
 
-## Build instructions
-(You need the roxygen2 and devtools libraries)
-The following code blocks make it easy to construct and test the package quickly
-
-```setwd("C:/Users/thebr/Documents/UW WORK/Stat_499/package")
-document()
-
-setwd("C:/Users/thebr/Documents/UW WORK/Stat_499")
-install("package")
+## Install Instructions
 ```
-## Bugs
-- if prompt is in the corpus, but it only appears within other characters, it will crash. for example, `prompt = navy` but navy only is in the string (navy)
+# install.packages("devtools")
+library(devtools)
+install.github("serrat839/package")
+```
+
+## How to use
+```
+# Load the package
+library(thePackage) # Sorry there is not a good name for it yet, I am open to suggestions
+
+# Select a twitter handle and save to a variable
+tweets <- tweet_gettr("@realDonaldTrump")
+
+# Query our variable to make a sentence
+make_sentence(tweets)
+```
+
+## Bugs and known issues
+- If prompt is in the corpus, but it only appears within other characters, it will crash. for example, `prompt = navy` but navy only is in the string (navy)
