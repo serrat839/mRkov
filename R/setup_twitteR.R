@@ -6,7 +6,7 @@
 #' @keywords setup, api
 #' @export
 #' @examples
-#' setup_twitteR("api_key", "api_secret", "token", "token_secret")
+#' setup_twitteR()
 
 setup_twitteR <- function() {
   api_key <- "23YB5C8ywbEP9tkjzADC3u1fx"

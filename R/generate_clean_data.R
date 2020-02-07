@@ -5,7 +5,6 @@
 #' create an account. Then, go to create an app, fill out the form, and you should be able to access your very own keys and tokens.
 #' @keywords internal
 #' @noRd
-#' @examples
 
 generate_clean_data <- function(text_lines, sentiments) {
   print("We in here!")
@@ -33,8 +32,13 @@ generate_clean_data <- function(text_lines, sentiments) {
   # change sentiment rows with na to be some other blank option
   text_data[is.na(text_data$sentiment), "sentiment"] <- "no_sentiment"
 
+  # create a bank of @'s
+  has_at <- grepl("@", text_data$raw_tokens)
+  handles <- text_data[has_at, "raw_tokens"]
+  text_data[has_at,"lowercase_tokens"] <- "@"
+
   # create the list we want to return
-  data_list <- list(text=text_lines, tokens=text_data)
+  data_list <- list(text=text_lines, tokens=text_data, handles=handles)
 
   return(data_list)
 }

@@ -12,6 +12,8 @@
 #' make_sentence(corpus, prompt = "I", sentiment = "", lazy_sentiment = T, amp = 1)
 
 make_sentence <- function(corpus, prompt = "", sentiment = "", lazy_sentiment = T, amp = 1) {
+  handles <- corpus$handles
+  print(class(handles))
   corpus <- corpus$tokens
 
   # No prompt available
@@ -58,7 +60,16 @@ make_sentence <- function(corpus, prompt = "", sentiment = "", lazy_sentiment = 
     }
 
     selected_word <- sample(after_sentiment, 1)
-    sentence <- paste(sentence, selected_word)
+    if (grepl("@", selected_word)) {
+      print('WE GOT AN @')
+      print(handles)
+      print(length(handles))
+      # for some reason, it cannot randomly pick from our handles list???
+      selected_at <- sample(handles,1, replace = T)
+      sentence <- paste(sentence, selected_at)
+    } else {
+      sentence <- paste(sentence, selected_word)
+    }
     words <- words + 1
   }
 

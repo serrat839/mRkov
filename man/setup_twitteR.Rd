@@ -12,7 +12,7 @@ If you don't have twitter api keys, go to https://developer.twitter.com/ and
 create an account. Then, go to create an app, fill out the form, and you should be able to access your very own keys and tokens.
 }
 \examples{
-setup_twitteR("api_key", "api_secret", "token", "token_secret")
+setup_twitteR()
 }
 \keyword{api}
 \keyword{setup,}
