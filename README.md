@@ -7,7 +7,7 @@ Using the twitteR package, it scrapes a twitter handle that you can query to ran
 ```
 # install.packages("devtools")
 library(devtools)
-install.github("serrat839/package")
+install_github("serrat839/package")
 ```
 
 ## How to use
