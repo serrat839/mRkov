@@ -7,6 +7,7 @@
 #' @param n Integer. Defaults to `3200`. The number of tweets to pull.
 #' @param includeRts Boolean. Defaults to `FALSE`. Whether or not to include re-tweets.
 #' @param excludeReplies Boolean. Defaults to `TRUE`. Wehter or not to exclude replies.
+#' @param sentiments Dataframe. Dataframe containing words and their sentiments. Columns MUST be "word" and "sentiment"
 #' @keywords Twitter, Scraping
 #' @return Returns a properly-formatted list that you can run make_sentence on
 #' @export
@@ -14,7 +15,7 @@
 #' test_function("@realDonaldTrump", "./trump.txt")
 
 tweet_gettr <- function(handle, output = "", n = 3200,
-                        includeRts = FALSE, excludeReplies = TRUE) {
+                        includeRts = FALSE, excludeReplies = TRUE, sentiments = NULL) {
   # Make sure that this is an @
   if (substr(handle,1,1) != '@') {
     handle <- paste('@', handle, sep = "")
@@ -43,33 +44,11 @@ tweet_gettr <- function(handle, output = "", n = 3200,
     close(fileConn)
   }
 
-  # prep for make_sentencce
-  # Add delimiters
-  tweets <- paste(tweets, "ENDOFTWEET")
+  if(is.null(sentiments)) {
+    print("Using standard sentiments...")
+    sentiments <- tidytext::get_sentiments("bing")
+  }
 
-  # tokenize the tweets
-  token_list <- strsplit(tweets, " ")
-
-  # make the token list into a vector
-  raw_tokens <- unlist(token_list)
-
-  # make a dataframe with lowercase(clean) tokens, raw tokens, and a column saying if it is a first word or not
-  tweet_data <- data.frame(raw_tokens, stringsAsFactors = F)
-  tweet_data$lowercase_tokens <- stringr::str_to_lower(tweet_data$raw_tokens)
-
-  firsts <- raw_tokens == "ENDOFTWEET"
-  firsts <- c(T, firsts[-length(firsts)])
-  tweet_data$firsts <- firsts
-
-  # add a sentiment column
-  tweet_data <- dplyr::left_join(tweet_data, tidytext::get_sentiments("bing"), by = c("lowercase_tokens" = "word"), name= "sentiment")
-
-  # change sentiment rows with na to be some other blank option
-  tweet_data[is.na(tweet_data$sentiment), "sentiment"] <- "no_sentiment"
-
-  # create the list we want to return
-  data_list <- list(text=tweets, tokens=tweet_data)
-
-  return(data_list)
+  return(generate_clean_data(tweets, sentiments))
 }
 

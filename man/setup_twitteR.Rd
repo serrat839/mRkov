@@ -6,15 +6,6 @@
 \usage{
 setup_twitteR()
 }
-\arguments{
-\item{api_key}{A string containing your api key}
-
-\item{api_secret}{A string containing your secret api key}
-
-\item{token}{A string containing your token}
-
-\item{token_secret}{A string containing your secret token}
-}
 \description{
 This function allows you to link your twitter to the twitter API
 If you don't have twitter api keys, go to https://developer.twitter.com/ and

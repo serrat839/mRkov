@@ -36,7 +36,7 @@ make_sentence <- function(corpus, prompt = "", sentiment = "", lazy_sentiment = 
   sentence <- selected_word
   words <- 0
 
-  while(!grepl('[.!?]|ENDOFTWEET', sentence)) {
+  while(!grepl('[.!?]|ENDOFLINE', sentence)) {
     matches <- append(c(F), stringr::str_to_lower(selected_word) == corpus$lowercase_tokens)
     after_match <- corpus[matches, ]
     # No sentiment influence
@@ -62,6 +62,6 @@ make_sentence <- function(corpus, prompt = "", sentiment = "", lazy_sentiment = 
     words <- words + 1
   }
 
-  sentence <- stringr::str_replace(sentence, " ENDOFTWEET", "")
+  sentence <- stringr::str_replace(sentence, " ENDOFLINE", "")
   return(sentence)
 }
