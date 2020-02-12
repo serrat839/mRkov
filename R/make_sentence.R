@@ -13,12 +13,10 @@
 
 make_sentence <- function(corpus, prompt = "", sentiment = "", lazy_sentiment = T, amp = 1) {
   handles <- corpus$handles
-  print(class(handles))
   corpus <- corpus$tokens
 
   # No prompt available
   if (nchar(prompt) == 0) {
-
     selected_word <- sample(corpus[corpus$firsts, "raw_tokens"], 1)
   }
 
@@ -27,16 +25,22 @@ make_sentence <- function(corpus, prompt = "", sentiment = "", lazy_sentiment = 
     # determine if the prompt is IN our corpus
     regex_prompt <- paste('\\b', prompt, '\\b', sep = "")
     prompt_is_valid <- grepl(regex_prompt, corpus$lowercase_tokens, ignore.case = T)
-
-    if (!any(prompt_is_valid)) {
+    if (grepl("@", prompt)) {
+      # do nothing lmfao
+    }else if (!any(prompt_is_valid)) {
       return("This prompt is bad!")
     }
-
     selected_word <- prompt
   }
 
   sentence <- selected_word
-  words <- 0
+  print(sentence)
+
+  # if our first word contains an @, change our first word to an @, this allows us to search through our raw tokens.
+  # Our selected word is already recorded in sentence, so we don't need to worry.
+  if (grepl("@", selected_word)) {
+    selected_word <- "@"
+  }
 
   while(!grepl('[.!?]|ENDOFLINE', sentence)) {
     matches <- append(c(F), stringr::str_to_lower(selected_word) == corpus$lowercase_tokens)
@@ -44,33 +48,29 @@ make_sentence <- function(corpus, prompt = "", sentiment = "", lazy_sentiment = 
     # No sentiment influence
     if (nchar(sentiment) == 0) {
       after_sentiment <- after_match$raw_tokens
-    # Only choose from the chosen sentiment. If the sentiment has no followups, pick from the standard one
+      # Only choose from the chosen sentiment. If the sentiment has no followups, pick from the standard one
     } else if(lazy_sentiment) {
       after_sentiment <- after_match[after_match$sentiment == sentiment, "raw_tokens"]
       if (nrow(after_sentiment) == 0) {
         after_sentiment <- after_match$raw_tokens
       }
-    # Increase the ammount of tweets of a certain sentiment by amp
+      # Increase the ammount of tweets of a certain sentiment by amp
     } else {
       good_words <- after_match[after_match$sentiment == sentiment, "raw_tokens"]
       after_sentiment <- c(after_match$raw_tokens, rep(good_words, amp))
-      print(good_words)
-      print(after_sentiment)
       asdf <- readline(prompt="sentence")
     }
 
     selected_word <- sample(after_sentiment, 1)
     if (grepl("@", selected_word)) {
-      print('WE GOT AN @')
-      print(handles)
-      print(length(handles))
       # for some reason, it cannot randomly pick from our handles list???
       selected_at <- sample(handles,1, replace = T)
       sentence <- paste(sentence, selected_at)
+      selected_word <- "@"
     } else {
       sentence <- paste(sentence, selected_word)
     }
-    words <- words + 1
+
   }
 
   sentence <- stringr::str_replace(sentence, " ENDOFLINE", "")

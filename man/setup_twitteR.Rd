@@ -4,7 +4,21 @@
 \alias{setup_twitteR}
 \title{TwittR Setup}
 \usage{
-setup_twitteR()
+setup_twitteR(
+  api_key = NULL,
+  api_secret = NULL,
+  token = NULL,
+  token_secret = NULL
+)
+}
+\arguments{
+\item{api_key}{String. Defaults to NULL. User's api key if they don't wish to use ours}
+
+\item{api_secret}{String. Defaults to NULL. User's secret api if they don't wish to use ours}
+
+\item{token}{String. Defaults to NULL. User's token if they don't wish to use ours}
+
+\item{token_secret}{String. Defaults to NULL. User's secret token if they don't wish to use ours}
 }
 \description{
 This function allows you to link your twitter to the twitter API
