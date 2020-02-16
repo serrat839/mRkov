@@ -34,8 +34,7 @@ tweet_gettr <- function(handle, output = "", n = 3200,
 
   tweets <- twitteR::twListToDF(tweets)
   tweets <- tweets$text
-  tweets <- stringr::str_replace_all(tweets, "'", "")
-  tweets <- stringr::str_replace_all(tweets, "\n", "newline")
+  tweets <- stringr::str_replace_all(tweets, "\n", " newline ")
 
   # export the tweets here
   if (nchar(output) > 0) {

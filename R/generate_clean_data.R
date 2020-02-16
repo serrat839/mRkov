@@ -17,7 +17,7 @@ generate_clean_data <- function(text_lines, sentiments) {
   text_lines <- gsub("https:\\/\\/t\\.co.*","" ,text_lines)
 
   # add a space in front of every punctuation mark, this way each punctuation mark will be a token
-  text_lines <- gsub("([[:punct:]])"," \\1 ", text_lines)
+  text_lines <- gsub("([[:punct:]]&&[^'])"," \\1 ", text_lines)
 
   # remove double spaces before and after words
   text_lines <- gsub("\\s+"," ", text_lines)
@@ -29,9 +29,10 @@ generate_clean_data <- function(text_lines, sentiments) {
   # make the tokens into a vector
   raw_tokens <- unlist(token_list)
 
-  # make a dataframe with lowercase(clean) tokens, raw tokens and a column saying if it is a first word or not
+  # make a dataframe with clean(lowercase and without apostraphes) tokens, raw tokens and a column saying if it is a first word or not
   text_data <- data.frame(raw_tokens, stringsAsFactors = F)
   text_data$lowercase_tokens <- stringr::str_to_lower(text_data$raw_tokens)
+  text_data$lowercase_tokens <- stringr::str_replace_all(text_data$lowercase_tokens, "'", "")
 
   firsts <- raw_tokens == "ENDOFLINE"
   firsts <- c(T, firsts[-length(firsts)])
