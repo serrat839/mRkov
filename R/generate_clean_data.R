@@ -11,6 +11,17 @@ generate_clean_data <- function(text_lines, sentiments) {
 
   # add line delimiters
   text_lines <- paste(text_lines, "ENDOFLINE")
+  print(class(text_lines))
+
+  # remove t.co links
+  text_lines <- gsub("https:\\/\\/t\\.co.*","" ,text_lines)
+
+  # add a space in front of every punctuation mark, this way each punctuation mark will be a token
+  text_lines <- gsub("([[:punct:]])"," \\1 ", text_lines)
+
+  # remove double spaces before and after words
+  text_lines <- gsub("\\s+"," ", text_lines)
+  print(class(text_lines))
 
   # tokenize the lines
   token_list <- strsplit(text_lines, " ")
