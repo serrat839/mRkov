@@ -63,11 +63,15 @@ make_sentence <- function(corpus, prompt = "", sentiment = "", lazy_sentiment = 
 
     selected_word <- sample(after_sentiment, 1)
     if (grepl("@", selected_word)) {
-      # for some reason, it cannot randomly pick from our handles list???
+      # @ is selected, our selected word is now an @ from our @ bank
       selected_at <- sample(handles,1, replace = T)
       sentence <- paste(sentence, selected_at)
       selected_word <- "@"
-    } else {
+    } else if (grepl("^[[:punct:]]", selected_word)){
+      # our selected word is punctuation, add it without spaces
+      sentence <- paste0(sentence, selected_word)
+    }  else {
+      # our selected word is a word, add it with spaces
       sentence <- paste(sentence, selected_word)
     }
 
