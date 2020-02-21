@@ -34,5 +34,8 @@ my_server <- function(input, output) {
     sentence
   })
 
+  output$plot <- renderPlot({
+    make_wordcloud(v$tweet_data, "")
+  })
 
 }

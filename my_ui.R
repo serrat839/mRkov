@@ -2,6 +2,7 @@ library(shiny)
 library(mRkov)
 # The UI is the result of calling the `fluidPage()` layout function
 my_ui <- fluidPage(
+  theme = "lux.css",
   # A static content element: a 2nd level header that displays text
   h2("mRkov: A fun toolbox"),
 
@@ -14,8 +15,11 @@ my_ui <- fluidPage(
 
   # An output element: a text output (for the `message` key)
   textOutput(outputId = "message"),
-  # An output element: a text output (for the `message` key)
-  textOutput(outputId = "sentence")
 
+  # An output element: a text output (for the `message` key)
+  textOutput(outputId = "sentence"),
+
+  # Outputting a wordcloud
+  plotOutput("plot")
 
 )

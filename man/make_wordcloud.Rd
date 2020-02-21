@@ -4,19 +4,19 @@
 \alias{make_wordcloud}
 \title{TwittR Setup}
 \usage{
-make_wordcloud(information, stops)
+make_wordcloud(information, stops = "")
 }
 \arguments{
-\item{information.}{List. The output from tweet_gettr or read_text_file}
+\item{information}{List. The output from tweet_gettr or read_text_file}
 
-\item{stops.}{String or vector of strings. Words to remove from the word cloud}
+\item{stops}{String or vector of strings. Words to remove from the word cloud}
 }
 \description{
 This function takes in the output from tweet_gettr or read_text_file and generates a word cloud from the most frequent words
 words can be removed by using the stops parameter
 }
 \examples{
-setup_twitteR("api_key", "api_secret", "token", "token_secret")
+make_wordcloud(tweet_data)
 
 }
 \keyword{api}
