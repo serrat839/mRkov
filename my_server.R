@@ -19,20 +19,19 @@ my_server <- function(input, output) {
 
   observeEvent(
     input$search, {
-      print("Searching...")
       v$tweet_data <- tweet_gettr(input$username)
     }
   )
 
   output$sentence <- renderText({
     placeholder <- input$make_sentence
-    print("making a sentence:")
     if(!is.null(v$tweet_data)) {
       sentence <- make_sentence(v$tweet_data)
     } else {
       sentence <- "Waiting for a sentence to be generated..."
     }
-      sentence
+
+    sentence
   })
 
 

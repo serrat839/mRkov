@@ -34,7 +34,6 @@ make_sentence <- function(corpus, prompt = "", sentiment = "", lazy_sentiment = 
   }
 
   sentence <- selected_word
-  print(sentence)
 
   # if our first word contains an @, change our first word to an @, this allows us to search through our raw tokens.
   # Our selected word is already recorded in sentence, so we don't need to worry.
