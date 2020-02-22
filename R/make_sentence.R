@@ -1,15 +1,15 @@
 #' Make Sentence
 #'
 #' This function allows you to create a sentence from a body of words loaded by this package
-#' @param corpus List. A list output by tweet_gettr.
+#' @param corpus List. A list output from tweet_gettr.
 #' @param prompt String. A string containing a word to start the markov chain.
-#' @param sentiment String. The goal sentiment of the sentence.
+#' @param sentiment String. The goal sentiment of the sentence. Must match one of the sentiments used when calling `tweet_gettr` or `read_text_file`
 #' @param lazy_sentiment Boolean. The option to choose only from words that have the selected sentiment if applicable. If FALSE, it will increase words of the given sentiment by "amp" times.
 #' @param amp The number of times to increase words of the appropriate sentiment when lazy_sentiment is FALSE.
 #' @keywords sentence
 #' @export
 #' @examples
-#' make_sentence(corpus, prompt = "I", sentiment = "", lazy_sentiment = T, amp = 1)
+#' make_sentence(trump_tweets, prompt = "I", sentiment = "", lazy_sentiment = T, amp = 1)
 
 make_sentence <- function(corpus, prompt = "", sentiment = "", lazy_sentiment = T, amp = 1) {
   handles <- corpus$handles

@@ -8,7 +8,7 @@
 #' @keywords setup, api
 #' @export
 #' @examples
-#' make_wordcloud(tweet_data)
+#' make_wordcloud(trump_tweets)
 #'
 
 make_wordcloud <- function(information, stops = "") {
@@ -20,9 +20,9 @@ make_wordcloud <- function(information, stops = "") {
   information <- information %>%
     dplyr::count(lowercase_tokens, sort =T)
 
-  stopwords <- stopwords::data_stopwords_smart$en
-  stopwords <- c(stopwords, stops, "endofline")
-  stopwords <- data.frame(stopwords, stringsAsFactors = F)
-  information <- dplyr::anti_join(information, stopwords, by= c("lowercase_tokens" = "stopwords"))
+  stop_words <- stopwords::data_stopwords_smart$en
+  stop_words <- c(stop_words, stops, "endofline")
+  stop_words <- data.frame(stop_words, stringsAsFactors = F)
+  information <- dplyr::anti_join(information, stop_words, by= c("lowercase_tokens" = "stop_words"))
   wordcloud::wordcloud(information$lowercase_tokens, information$n)
 }

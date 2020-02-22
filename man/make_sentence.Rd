@@ -7,11 +7,11 @@
 make_sentence(corpus, prompt = "", sentiment = "", lazy_sentiment = T, amp = 1)
 }
 \arguments{
-\item{corpus}{List. A list output by tweet_gettr.}
+\item{corpus}{List. A list output from tweet_gettr.}
 
 \item{prompt}{String. A string containing a word to start the markov chain.}
 
-\item{sentiment}{String. The goal sentiment of the sentence.}
+\item{sentiment}{String. The goal sentiment of the sentence. Must match one of the sentiments used when calling `tweet_gettr` or `read_text_file`}
 
 \item{lazy_sentiment}{Boolean. The option to choose only from words that have the selected sentiment if applicable. If FALSE, it will increase words of the given sentiment by "amp" times.}
 
@@ -21,6 +21,6 @@ make_sentence(corpus, prompt = "", sentiment = "", lazy_sentiment = T, amp = 1)
 This function allows you to create a sentence from a body of words loaded by this package
 }
 \examples{
-make_sentence(corpus, prompt = "I", sentiment = "", lazy_sentiment = T, amp = 1)
+make_sentence(trump_tweets, prompt = "I", sentiment = "", lazy_sentiment = T, amp = 1)
 }
 \keyword{sentence}

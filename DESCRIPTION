@@ -17,5 +17,6 @@ Imports:
     stringr,
     dplyr,
     tidytext,
+    stopwords,
     wordcloud,
     magrittr

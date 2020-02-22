@@ -16,7 +16,7 @@ This function takes in the output from tweet_gettr or read_text_file and generat
 words can be removed by using the stops parameter
 }
 \examples{
-make_wordcloud(tweet_data)
+make_wordcloud(trump_tweets)
 
 }
 \keyword{api}
