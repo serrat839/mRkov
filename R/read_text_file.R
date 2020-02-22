@@ -9,7 +9,7 @@
 #' @return Returns a properly-formatted list that you can run make_sentence on
 #' @export
 #' @examples
-#' read_text_file(paste0(getwd(), "/data-raw/trump.txt))
+#' read_text_file(paste0( "~/trump.txt"))
 
 read_text_file <- function(text_file, delimiter = "\n", sentiments = NULL) {
   text <- scan(text_file, character(), quote="", sep = delimiter)
