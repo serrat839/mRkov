@@ -12,7 +12,7 @@
 #' @return Returns a properly-formatted list that you can run make_sentence on
 #' @export
 #' @examples
-#' test_function("@realDonaldTrump", "./trump.txt")
+#' tweet_gettr("@realDonaldTrump", "./trump.txt")
 
 tweet_gettr <- function(handle, output = "", n = 3200,
                         includeRts = FALSE, excludeReplies = TRUE, sentiments = NULL) {

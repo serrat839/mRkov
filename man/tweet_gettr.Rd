@@ -33,7 +33,7 @@ Returns a properly-formatted list that you can run make_sentence on
 This function lets you scrape the timeline of any twitter user. You MUST run the setup function before using this function in order for it to work.
 }
 \examples{
-test_function("@realDonaldTrump", "./trump.txt")
+tweet_gettr("@realDonaldTrump", "./trump.txt")
 }
 \keyword{Scraping}
 \keyword{Twitter,}
