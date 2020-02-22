@@ -15,11 +15,10 @@ make_wordcloud <- function(information, stops = "") {
   if (is.null(information)) {
     return(NULL)
   }
+  lowercase_tokens <- NULL
   information <- information$tokens
   information <- information %>%
-    dplyr::group_by(lowercase_tokens) %>%
-    dplyr::summarise(n = n()) %>%
-    dplyr::arrange(-n)
+    dplyr::count(lowercase_tokens, sort =T)
 
   stopwords <- stopwords::data_stopwords_smart$en
   stopwords <- c(stopwords, stops, "endofline")

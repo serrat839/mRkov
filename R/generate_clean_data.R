@@ -4,6 +4,7 @@
 #' If you don't have twitter api keys, go to https://developer.twitter.com/ and
 #' create an account. Then, go to create an app, fill out the form, and you should be able to access your very own keys and tokens.
 #' @keywords internal
+#' @importFrom magrittr "%>%"
 #' @noRd
 
 generate_clean_data <- function(text_lines, sentiments) {
