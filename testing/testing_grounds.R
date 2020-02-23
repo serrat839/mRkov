@@ -23,8 +23,7 @@ find_next <- function(history, bank) {
               167, 173, 179, 181, 191, 193, 197, 199)
   aux_list <- list()
   for (x in history) {
-    print(x)
-    aux_list[[x]] <- bank == x
+    aux_list[[as.character(length(aux_list))]] <- bank == x
   }
 
   print(aux_list)
