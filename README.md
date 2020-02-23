@@ -1,4 +1,4 @@
-# Insert clever name here!
+# mRkov
 
 This is a markov chain twitter package.
 Using the twitteR package, it scrapes a twitter handle that you can query to randomly generate sentences from!
