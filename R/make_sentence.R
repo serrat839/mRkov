@@ -11,7 +11,7 @@
 #' @examples
 #' make_sentence(trump_tweets, prompt = "I", sentiment = "", lazy_sentiment = T, amp = 1)
 
-make_sentence <- function(corpus, prompt = "", sentiment = "", lazy_sentiment = T, amp = 1) {
+make_sentence <- function(corpus, prompt = "", n = 1,sentiment = "", lazy_sentiment = T, amp = 1) {
   handles <- corpus$handles
   corpus <- corpus$tokens
 
@@ -41,9 +41,10 @@ make_sentence <- function(corpus, prompt = "", sentiment = "", lazy_sentiment = 
     selected_word <- "@"
   }
 
+  word_history <- list(stringr::str_to_lower(selected_word))
   while(!grepl('[.!?]|ENDOFLINE', sentence)) {
-    matches <- append(c(F), stringr::str_to_lower(selected_word) == corpus$lowercase_tokens)
-    after_match <- corpus[matches, ]
+    matched_sequence <- find_sequence(word_history, corpus$lowercase_tokens)
+    after_match <- corpus[matched_sequence, ]
     # No sentiment influence
     if (nchar(sentiment) == 0) {
       after_sentiment <- after_match$raw_tokens
@@ -73,6 +74,13 @@ make_sentence <- function(corpus, prompt = "", sentiment = "", lazy_sentiment = 
       # our selected word is a word, add it with spaces
       sentence <- paste(sentence, selected_word)
     }
+
+    word_history <- append(word_history, stringr::str_to_lower(selected_word))
+
+    if (length(word_history) > n) {
+      word_history[[1]] <- NULL
+    }
+
 
   }
 

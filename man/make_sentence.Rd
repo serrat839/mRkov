@@ -4,7 +4,14 @@
 \alias{make_sentence}
 \title{Make Sentence}
 \usage{
-make_sentence(corpus, prompt = "", sentiment = "", lazy_sentiment = T, amp = 1)
+make_sentence(
+  corpus,
+  prompt = "",
+  n = 1,
+  sentiment = "",
+  lazy_sentiment = T,
+  amp = 1
+)
 }
 \arguments{
 \item{corpus}{List. A list output from tweet_gettr.}
