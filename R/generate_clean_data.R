@@ -1,8 +1,10 @@
-#' TwittR Setup
+#' generate_clean_data
 #'
 #' This function allows you to link your twitter to the twitter API
 #' If you don't have twitter api keys, go to https://developer.twitter.com/ and
 #' create an account. Then, go to create an app, fill out the form, and you should be able to access your very own keys and tokens.
+#' @param text_lines Vector. A vector of lines of text that was given to us from the data collection functions `tweet_gettr()` and `read_text_file()`
+#' @param sentiments DataFrame. A DataFrame of sentiments to use when attaching sentiment data to words.
 #' @keywords internal
 #' @importFrom magrittr "%>%"
 #' @noRd

@@ -6,6 +6,7 @@
 #' @param sentiment String. The goal sentiment of the sentence. Must match one of the sentiments used when calling `tweet_gettr` or `read_text_file`
 #' @param lazy_sentiment Boolean. The option to choose only from words that have the selected sentiment if applicable. If FALSE, it will increase words of the given sentiment by "amp" times.
 #' @param amp The number of times to increase words of the appropriate sentiment when lazy_sentiment is FALSE.
+#' @param n Integer. The length of the sequence of words we want to match when generating a sentence.
 #' @keywords sentence
 #' @export
 #' @examples
