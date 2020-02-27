@@ -18,6 +18,8 @@ make_sentence(
 
 \item{prompt}{String. A string containing a word to start the markov chain.}
 
+\item{n}{Integer. The length of the sequence of words we want to match when generating a sentence.}
+
 \item{sentiment}{String. The goal sentiment of the sentence. Must match one of the sentiments used when calling `tweet_gettr` or `read_text_file`}
 
 \item{lazy_sentiment}{Boolean. The option to choose only from words that have the selected sentiment if applicable. If FALSE, it will increase words of the given sentiment by "amp" times.}
