@@ -33,7 +33,6 @@ generate_clean_data <- function(text_lines, sentiments) {
   # make a dataframe with clean(lowercase and without apostraphes) tokens, raw tokens and a column saying if it is a first word or not
   text_data <- data.frame(raw_tokens, stringsAsFactors = F)
   text_data$lowercase_tokens <- stringr::str_to_lower(text_data$raw_tokens)
-  text_data$lowercase_tokens <- stringr::str_replace_all(text_data$lowercase_tokens, "'", "")
 
   firsts <- raw_tokens == "ENDOFLINE"
   firsts <- c(T, firsts[-length(firsts)])
