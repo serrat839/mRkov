@@ -18,8 +18,9 @@ generate_clean_data <- function(text_lines, sentiments) {
   text_lines <- gsub("https:\\/\\/t\\.co\\/.*","" ,text_lines)
 
   # add a space in front of every punctuation mark, this way each punctuation mark will be a token
-  text_lines <- gsub("([[:punct:]]&&[^'])"," \\1 ", text_lines)
-
+  text_lines <- gsub("([[:punct:]]+)"," \\1 ", text_lines)
+  text_lines <- gsub("(\\b ' \\b+)","'", text_lines)
+  print(text_lines)
   # remove double spaces before and after words
   text_lines <- gsub("\\s+"," ", text_lines)
 
