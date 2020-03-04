@@ -24,7 +24,7 @@ tweet_gettr <- function(handle, output = "", n = 3200,
   # Scrape handle's timeline.
   #  Exits if the twitter api is not setup
   tweets <- tryCatch(
-    {twitteR::userTimeline(handle, n = n, includeRts = includeRts,
+    {twitteR::userTimeline(handle, n = 3200, includeRts = includeRts,
                            excludeReplies = excludeReplies)},
     error = function(cond) {
       message("Error: Twitter api not setup. Please use setup_twitteR in order to scrape tweets from Twitter")

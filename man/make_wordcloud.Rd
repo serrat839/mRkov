@@ -4,12 +4,14 @@
 \alias{make_wordcloud}
 \title{TwittR Setup}
 \usage{
-make_wordcloud(information, stops = "")
+make_wordcloud(information, stops = "", n = Inf)
 }
 \arguments{
 \item{information}{List. The output from tweet_gettr or read_text_file}
 
 \item{stops}{String or vector of strings. Words to remove from the word cloud}
+
+\item{n}{Int. Max number of words to be included in wordcloud. Defaults to Inf.}
 }
 \description{
 This function takes in the output from tweet_gettr or read_text_file and generates a word cloud from the most frequent words

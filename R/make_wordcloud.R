@@ -25,5 +25,7 @@ make_wordcloud <- function(information, stops = "", n = Inf) {
   stop_words <- c(stop_words, stops, "endofline")
   stop_words <- data.frame(stop_words, stringsAsFactors = F)
   information <- dplyr::anti_join(information, stop_words, by= c("lowercase_tokens" = "stop_words"))
-  wordcloud::wordcloud(information$lowercase_tokens, information$n, max.words = n)
+  wordcloud::wordcloud(information$lowercase_tokens, information$n, max.words = n, res = 300,
+                       scale = c(5, 3))
 }
+

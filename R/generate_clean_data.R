@@ -19,6 +19,12 @@ generate_clean_data <- function(text_lines, sentiments) {
   text_lines <- gsub("([[:punct:]]+)"," \\1 ", text_lines)
   # undo this for apostraphes
   text_lines <- gsub("(\\b ' \\b+)","'", text_lines)
+  # undo this for @
+  text_lines <- gsub("( @ +)","@", text_lines)
+  # undo this for #
+  text_lines <- gsub("( # +)","#", text_lines)
+  # remove double spaces before and after words
+  text_lines <- gsub("newline","\n", text_lines)
   # remove double spaces before and after words
   text_lines <- gsub("\\s+"," ", text_lines)
 
