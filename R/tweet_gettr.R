@@ -48,6 +48,11 @@ tweet_gettr <- function(handle, output = "", n = 3200,
     sentiments <- tidytext::get_sentiments("bing")
   }
 
-  return(generate_clean_data(tweets, sentiments))
+  twitter_data <- c(
+    handle,
+    twitteR::getUser(handle)$name
+  )
+
+  return(generate_clean_data(tweets, sentiments, c(twitter_data)))
 }
 
