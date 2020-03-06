@@ -24,10 +24,10 @@ tweet_gettr <- function(handle, output = "", n = 3200,
   # Scrape handle's timeline.
   #  Exits if the twitter api is not setup
   tweets <- tryCatch(
-    {twitteR::userTimeline(handle, n = n, includeRts = includeRts,
+    {twitteR::userTimeline(handle, n = 3200, includeRts = includeRts,
                            excludeReplies = excludeReplies)},
     error = function(cond) {
-      message("Error: Twitter api not setup. Please use setup_twitteR in order to scrape tweets from Twitter")
+      message("Error: Twitter api not setup or hastag not set up. Please use setup_twitteR in order to scrape tweets from Twitter, and make sure the handle input was correct")
       stop()
     }
   )
@@ -35,6 +35,12 @@ tweet_gettr <- function(handle, output = "", n = 3200,
   tweets <- twitteR::twListToDF(tweets)
   tweets <- tweets$text
   tweets <- stringr::str_replace_all(tweets, "\n", " newline ")
+
+  if (length(tweets) > n) {
+    tweets <- tweets[1:n]
+  } else {
+    message("Less tweets available than the desired amount")
+  }
 
   # export the tweets here
   if (nchar(output) > 0) {

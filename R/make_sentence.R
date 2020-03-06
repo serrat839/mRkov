@@ -24,7 +24,7 @@ make_sentence <- function(corpus, prompt = "", n = 1,sentiment = "", lazy_sentim
   # User prompted the sentence maker
   else {
     # determine if the prompt is IN our corpus
-    regex_prompt <- paste('\\b', prompt, '\\b', sep = "")
+    regex_prompt <- paste0('^', prompt, '$')
     prompt_is_valid <- grepl(regex_prompt, corpus$lowercase_tokens, ignore.case = T)
     if (grepl("@", prompt)) {
       # do nothing lmfao
