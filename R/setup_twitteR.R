@@ -21,5 +21,5 @@ setup_twitteR <- function(api_key = NULL, api_secret = NULL, token = NULL, token
   token <- "1223331636856573952-xGkEYLfx5oe9VxD9abTllVpUax6YQe"
   token_secret <- "A0ijbzOkW3uYUQAIy24sFP7Qbp3nM8Of2sSg4L7cPgSvi"
   }
-  twitteR::setup_twitter_oauth(api_key, api_secret, token, token_secret)
+  return(rtweet::create_token(app="placeholder",api_key, api_secret, token, token_secret))
 }

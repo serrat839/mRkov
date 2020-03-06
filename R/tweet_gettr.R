@@ -6,7 +6,6 @@
 #' @param output The location of an output text file that you can re-use if you want a re-usable file of tweets. Defaults to a blank string, no output saved.
 #' @param n Integer. Defaults to `3200`. The number of tweets to pull.
 #' @param includeRts Boolean. Defaults to `FALSE`. Whether or not to include re-tweets.
-#' @param excludeReplies Boolean. Defaults to `TRUE`. Wehter or not to exclude replies.
 #' @param sentiments Dataframe. Dataframe containing words and their sentiments. Columns MUST be "word" and "sentiment"
 #' @keywords Twitter, Scraping
 #' @return Returns a properly-formatted list that you can run make_sentence on
@@ -14,26 +13,28 @@
 #' @examples
 #' tweet_gettr("@realDonaldTrump", "./trump.txt")
 
-tweet_gettr <- function(handle, output = "", n = 3200,
-                        includeRts = FALSE, excludeReplies = TRUE, sentiments = NULL) {
+tweet_gettr <- function(handle, token = NULL, output = "", n = 3200,
+                        includeRts = FALSE, sentiments = NULL) {
   # Make sure that this is an @
-  if (substr(handle,1,1) != '@') {
-    handle <- paste('@', handle, sep = "")
+  if (substr(handle,1,1) == '@') {
+    handle <- substr(handle, 2, length(handle))
   }
 
   # Scrape handle's timeline.
   #  Exits if the twitter api is not setup
-  tweets <- tryCatch(
-    {twitteR::userTimeline(handle, n = 3200, includeRts = includeRts,
-                           excludeReplies = excludeReplies)},
-    error = function(cond) {
-      message("Error: Twitter api not setup or hastag not set up. Please use setup_twitteR in order to scrape tweets from Twitter, and make sure the handle input was correct")
-      stop()
-    }
-  )
+  tweets_raw <- NULL
+  if (is.null(token)) {
+    message("Warning: Twitter api not set up, setting it up automatically")
+    token <- setup_twitteR()
+  }
 
-  tweets <- twitteR::twListToDF(tweets)
-  tweets <- tweets$text
+  tweets_raw <- rtweet::get_timeline(handle, token = token, n = 3200)
+
+  tweets <- tweets_raw$text
+  if (includeRts) {
+    tweets <- tweets[tweets_raw$is_retweet]
+  }
+
   tweets <- stringr::str_replace_all(tweets, "\n", " newline ")
 
   if (length(tweets) > n) {
@@ -53,6 +54,9 @@ tweet_gettr <- function(handle, output = "", n = 3200,
     print("Using standard sentiments...")
     sentiments <- tidytext::get_sentiments("bing")
   }
+
+  # get pfp
+  profile_pic_url <- raw_tweets[1, profile_image_url]
 
   return(generate_clean_data(tweets, sentiments))
 }
