@@ -57,7 +57,8 @@ tweet_gettr <- function(handle, token = NULL, output = "", n = 3200,
 
   # get pfp
   profile_pic_url <- raw_tweets[1, profile_image_url]
+  username <- raw_tweets[1, name]
 
-  return(generate_clean_data(tweets, sentiments))
+  return(generate_clean_data(tweets, sentiments, c(profile_pic_url, username, paste0("@",handle))))
 }
 

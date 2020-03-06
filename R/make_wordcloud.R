@@ -19,13 +19,12 @@ make_wordcloud <- function(information, stops = "", n = Inf) {
   lowercase_tokens <- NULL
   information <- information$tokens
   information <- information %>%
-    dplyr::count(lowercase_tokens, sort =T)
+    dplyr::count(lowercase_tokens, sort =T) %>%
+    dplyr::filter(!grepl("^[[:punct:]]+$", lowercase_tokens))
 
   stop_words <- stopwords::data_stopwords_smart$en
   stop_words <- c(stop_words, stops, "endofline")
   stop_words <- data.frame(stop_words, stringsAsFactors = F)
   information <- dplyr::anti_join(information, stop_words, by= c("lowercase_tokens" = "stop_words"))
-  wordcloud::wordcloud(information$lowercase_tokens, information$n, max.words = n, res = 300,
-                       scale = c(5, 3))
+  wordcloud::wordcloud(information$lowercase_tokens, information$n, max.words = n, scale = c(4, 2))
 }
-

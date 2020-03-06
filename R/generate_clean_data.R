@@ -5,11 +5,12 @@
 #' create an account. Then, go to create an app, fill out the form, and you should be able to access your very own keys and tokens.
 #' @param text_lines Vector. A vector of lines of text that was given to us from the data collection functions `tweet_gettr()` and `read_text_file()`
 #' @param sentiments DataFrame. A DataFrame of sentiments to use when attaching sentiment data to words.
+#' @param twitter_name String. An optional place to store meta-data about twitter users.
 #' @keywords internal
 #' @importFrom magrittr "%>%"
 #' @noRd
 
-generate_clean_data <- function(text_lines, sentiments) {
+generate_clean_data <- function(text_lines, sentiments, twitter_data=NULL) {
 
   # remove t.co links
   text_lines <- gsub("https:\\/\\/t\\.co\\/.*","" ,text_lines)
@@ -54,7 +55,7 @@ generate_clean_data <- function(text_lines, sentiments) {
   text_data[has_at,"lowercase_tokens"] <- "@"
 
   # create the list we want to return
-  data_list <- list(text=text_lines, tokens=text_data, handles=handles)
+  data_list <- list(text=text_lines, tokens=text_data, handles=handles, twitter_meta = c(twitter_data))
 
   return(data_list)
 }
