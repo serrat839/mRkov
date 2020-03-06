@@ -68,7 +68,7 @@ make_sentence <- function(corpus, prompt = "", n = 1,sentiment = "", lazy_sentim
       selected_at <- sample(handles,1, replace = T)
       sentence <- paste(sentence, selected_at)
       selected_word <- "@"
-    } else if (grepl("^[[:punct:]]", selected_word)){
+    } else if (grepl("[\\.|\\?|\\,|\\!]", selected_word)){
       # our selected word is punctuation, add it without spaces
       sentence <- paste0(sentence, selected_word)
     }  else {
