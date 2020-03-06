@@ -55,7 +55,7 @@ generate_clean_data <- function(text_lines, sentiments, twitter_data=NULL) {
   text_data[has_at,"lowercase_tokens"] <- "@"
 
   # create the list we want to return
-  data_list <- list(text=text_lines, tokens=text_data, handles=handles, twitter_meta = c(twitter_data))
+  data_list <- list(text=text_lines, tokens=text_data, handles=handles, twitter_meta = twitter_data)
 
   return(data_list)
 }
