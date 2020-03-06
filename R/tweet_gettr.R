@@ -33,7 +33,7 @@ tweet_gettr <- function(handle, token = NULL, output = "", n = 3200,
 
   tweets <- tweets_raw$text
   if (includeRts) {
-    tweets <- tweets[tweets_raw$is_retweet]
+    tweets <- tweets[!(tweets_raw$is_retweet)]
   }
 
   tweets <- stringr::str_replace_all(tweets, "\n", " newline ")
