@@ -22,6 +22,8 @@ generate_clean_data <- function(text_lines, sentiments, twitter_data=NULL) {
   text_lines <- gsub("newline","\n", text_lines)
   # remove double spaces before and after words
   text_lines <- gsub("\\s+"," ", text_lines)
+  # fix "&" being represented as "&amp;"
+  text_lines <- gsub("&amp;","&", text_lines)
 
   # tokenize the lines
   token_list <- strsplit(text_lines, " ")
@@ -42,7 +44,7 @@ generate_clean_data <- function(text_lines, sentiments, twitter_data=NULL) {
 
   # change sentiment rows with na to be some other blank option
   text_data[is.na(text_data$sentiment), "sentiment"] <- "no_sentiment"
-
+&
   # create a bank of @'s
   has_at <- grepl("@", text_data$raw_tokens)
   handles <- text_data[has_at, "raw_tokens"]
