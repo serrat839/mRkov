@@ -24,6 +24,8 @@ generate_clean_data <- function(text_lines, sentiments, twitter_data=NULL) {
   text_lines <- gsub("\\s+"," ", text_lines)
   # fix "&" being represented as "&amp;"
   text_lines <- gsub("&amp;","&", text_lines)
+  # Remove quotation marks
+  text_lines <- gsub('"',"", text_lines)
 
   # tokenize the lines
   token_list <- strsplit(text_lines, " ")
