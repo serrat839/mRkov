@@ -44,7 +44,7 @@ generate_clean_data <- function(text_lines, sentiments, twitter_data=NULL) {
 
   # change sentiment rows with na to be some other blank option
   text_data[is.na(text_data$sentiment), "sentiment"] <- "no_sentiment"
-&
+
   # create a bank of @'s
   has_at <- grepl("@", text_data$raw_tokens)
   handles <- text_data[has_at, "raw_tokens"]
