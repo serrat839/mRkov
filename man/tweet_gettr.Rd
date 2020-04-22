@@ -10,6 +10,7 @@ tweet_gettr(
   output = "",
   n = 3200,
   includeRts = FALSE,
+  includeReplies = FALSE,
   sentiments = NULL
 )
 }
@@ -24,13 +25,15 @@ tweet_gettr(
 
 \item{includeRts}{Boolean. Defaults to `FALSE`. Whether or not to include re-tweets.}
 
+\item{includeReplies}{Boolean. Defaults to `FALSE`. Whether or not to include replies.}
+
 \item{sentiments}{Dataframe. Dataframe containing words and their sentiments. Columns MUST be "word" and "sentiment"}
 }
 \value{
 Returns a properly-formatted list that you can run make_sentence on
 }
 \description{
-This function lets you scrape the timeline of any twitter user. You MUST run the setup function before using this function in order for it to work.
+This function lets you scrape the timeline of any twitter user.
 }
 \examples{
 tweet_gettr("@realDonaldTrump", "./trump.txt")
