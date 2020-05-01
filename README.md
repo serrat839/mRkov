@@ -1,7 +1,16 @@
 # mRkov
 
-This is a markov chain twitter package.
-Using the twitteR package, it scrapes a twitter handle that you can query to randomly generate sentences from!
+## Functionality
+This R package allows users to load in data via twitter or text file, and then perform analysis of said data.
+There are two functions that allow users to load data:
+```
+# Scrape a twitter user's timeline
+tweet_gettr()
+# Read from a local text file
+read_text_file()
+```
+
+After storing this data in a variable, users can then pass it to our `make_sentence()` function or `make_wordcloud` function to simulate or visualize the loaded data.
 
 ## Install Instructions
 ```
@@ -10,17 +19,17 @@ library(devtools)
 install_github("serrat839/mRkov")
 ```
 
-## How to use
+## Short tutorial
 ```
 # Load the package
 library(mRkov)
 
-# Connect to dummy twitter account
-setup_twittR()
-
-# Select a twitter handle and save to a variable
+# Select a twitter handle and save to a variable. API keys are pre-loaded for a dummy twitter account.
 tweets <- tweet_gettr("@realDonaldTrump")
 
 # Query our variable to make a sentence
 make_sentence(tweets)
+
+# Make a wordcloud
+make_wordcloud(tweets)
 ```
