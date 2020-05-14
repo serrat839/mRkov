@@ -64,17 +64,17 @@ tweet_gettr <- function(handle, token = NULL, output = "", n = 3200,
     close(fileConn)
   }
 
-  if(is.null(sentiments)) {
-    print("Using standard sentiments...")
-    sentiments <- tidytext::get_sentiments("bing")
-  }
+  # if(is.null(sentiments)) {
+  #   print("Using standard sentiments...")
+  #   sentiments <- tidytext::get_sentiments("bing")
+  # }
 
   # get pfp
   profile_pic_url <- tweets_raw[1, "profile_image_url"]
   username <- tweets_raw[1, "name"]
 
-  return(generate_clean_data(tweets, sentiments, list("pfp" = profile_pic_url,
-                                                      "username" = username,
-                                                      "handle"=paste0("@",handle))))
+  return(generate_clean_data(tweets,list("pfp" = profile_pic_url,
+                                         "username" = username,
+                                         "handle"=paste0("@",handle))))
 }
 
