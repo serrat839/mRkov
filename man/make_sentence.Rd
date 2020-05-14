@@ -4,14 +4,7 @@
 \alias{make_sentence}
 \title{Make Sentence}
 \usage{
-make_sentence(
-  corpus,
-  prompt = "",
-  n = 1,
-  sentiment = "",
-  lazy_sentiment = T,
-  amp = 1
-)
+make_sentence(corpus, prompt = "", n = 1)
 }
 \arguments{
 \item{corpus}{List. A list output from tweet_gettr.}
@@ -19,17 +12,11 @@ make_sentence(
 \item{prompt}{String. A string containing a word to start the markov chain.}
 
 \item{n}{Integer. The length of the sequence of words we want to match when generating a sentence.}
-
-\item{sentiment}{String. The goal sentiment of the sentence. Must match one of the sentiments used when calling `tweet_gettr` or `read_text_file`}
-
-\item{lazy_sentiment}{Boolean. The option to choose only from words that have the selected sentiment if applicable. If FALSE, it will increase words of the given sentiment by "amp" times.}
-
-\item{amp}{The number of times to increase words of the appropriate sentiment when lazy_sentiment is FALSE.}
 }
 \description{
 This function allows you to create a sentence from a body of words loaded by this package
 }
 \examples{
-make_sentence(trump_tweets, prompt = "I", sentiment = "", lazy_sentiment = T, amp = 1)
+make_sentence(trump_tweets, prompt = "I")
 }
 \keyword{sentence}

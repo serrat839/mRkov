@@ -4,14 +4,12 @@
 \alias{read_text_file}
 \title{Tweet GettR}
 \usage{
-read_text_file(text_file, delimiter = "\\n", sentiments = NULL)
+read_text_file(text_file, delimiter = "\\n")
 }
 \arguments{
 \item{text_file}{String. Path to the text file you want to read in}
 
 \item{delimiter}{String. String that dictates what is a new line}
-
-\item{sentiments}{Dataframe. Dataframe containing words and their sentiments. Columns MUST be "word" and "sentiment."}
 }
 \value{
 Returns a properly-formatted list that you can run make_sentence on

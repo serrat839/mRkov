@@ -4,7 +4,9 @@
 \name{trump_tweets}
 \alias{trump_tweets}
 \title{Trump Tweet Data}
-\format{An object of class \code{list} of length 4.}
+\format{
+An object of class \code{list} of length 4.
+}
 \usage{
 data(trump_tweets)
 }

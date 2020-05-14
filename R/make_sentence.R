@@ -3,16 +3,13 @@
 #' This function allows you to create a sentence from a body of words loaded by this package
 #' @param corpus List. A list output from tweet_gettr.
 #' @param prompt String. A string containing a word to start the markov chain.
-#' @param sentiment String. The goal sentiment of the sentence. Must match one of the sentiments used when calling `tweet_gettr` or `read_text_file`
-#' @param lazy_sentiment Boolean. The option to choose only from words that have the selected sentiment if applicable. If FALSE, it will increase words of the given sentiment by "amp" times.
-#' @param amp The number of times to increase words of the appropriate sentiment when lazy_sentiment is FALSE.
 #' @param n Integer. The length of the sequence of words we want to match when generating a sentence.
 #' @keywords sentence
 #' @export
 #' @examples
-#' make_sentence(trump_tweets, prompt = "I", sentiment = "", lazy_sentiment = T, amp = 1)
+#' make_sentence(trump_tweets, prompt = "I")
 
-make_sentence <- function(corpus, prompt = "", n = 1,sentiment = "", lazy_sentiment = T, amp = 1) {
+make_sentence <- function(corpus, prompt = "", n = 1) {
   handles <- corpus$handles
   corpus <- corpus$tokens
 
@@ -46,21 +43,7 @@ make_sentence <- function(corpus, prompt = "", n = 1,sentiment = "", lazy_sentim
   while(!grepl('[.!?]|ENDOFLINE', sentence)) {
     matched_sequence <- find_sequence(word_history, corpus$lowercase_tokens)
     after_match <- corpus[matched_sequence, ]
-    # No sentiment influence
-    if (nchar(sentiment) == 0) {
-      after_sentiment <- after_match$raw_tokens
-      # Only choose from the chosen sentiment. If the sentiment has no followups, pick from the standard one
-    } else if(lazy_sentiment) {
-      after_sentiment <- after_match[after_match$sentiment == sentiment, "raw_tokens"]
-      if (nrow(after_sentiment) == 0) {
-        after_sentiment <- after_match$raw_tokens
-      }
-      # Increase the ammount of tweets of a certain sentiment by amp
-    } else {
-      good_words <- after_match[after_match$sentiment == sentiment, "raw_tokens"]
-      after_sentiment <- c(after_match$raw_tokens, rep(good_words, amp))
-      asdf <- readline(prompt="sentence")
-    }
+    after_sentiment <- after_match$raw_tokens
 
     selected_word <- sample(after_sentiment, 1)
     if (grepl("@", selected_word)) {
