@@ -4,13 +4,12 @@
 #' If you don't have twitter api keys, go to https://developer.twitter.com/ and
 #' create an account. Then, go to create an app, fill out the form, and you should be able to access your very own keys and tokens.
 #' @param text_lines Vector. A vector of lines of text that was given to us from the data collection functions `tweet_gettr()` and `read_text_file()`
-#' @param sentiments DataFrame. A DataFrame of sentiments to use when attaching sentiment data to words.
 #' @param twitter_name String. An optional place to store meta-data about twitter users.
 #' @keywords internal
 #' @importFrom magrittr "%>%"
 #' @noRd
 
-generate_clean_data <- function(text_lines, sentiments, twitter_data=NULL) {
+generate_clean_data <- function(text_lines, twitter_data=NULL) {
 
   # remove t.co links
   text_lines <- gsub("https:\\/\\/t\\.co\\/.*","" ,text_lines)
@@ -41,11 +40,6 @@ generate_clean_data <- function(text_lines, sentiments, twitter_data=NULL) {
   firsts <- c(T, firsts[-length(firsts)])
   text_data$firsts <- firsts
 
-  # add a sentiment column
-  text_data <- dplyr::left_join(text_data, sentiments, by = c("lowercase_tokens" = "word"), name= "sentiment")
-
-  # change sentiment rows with na to be some other blank option
-  text_data[is.na(text_data$sentiment), "sentiment"] <- "no_sentiment"
 
   # create a bank of @'s
   has_at <- grepl("@", text_data$raw_tokens)
