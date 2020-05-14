@@ -30,13 +30,11 @@ tweet_gettr <- function(handle, token = NULL, output = "", n = 3200,
     token <- setup_twitteR()
   }
 
-  tweets_raw <- as.data.frame(rtweet::get_timeline(handle, token = token, n = 3200))
-  print("Number of Tweets Found")
-  print(ncol(tweets_raw))
-  if (ncol(tweets_raw) == 0) {
+  tweets_raw <- rtweet::get_timeline(handle, token = token, n = 3200)
+  if (nrow(tweets_raw) == 0) {
     return("No Tweets Found")
   }
-
+  tweets_raw <- as.data.frame(tweets_raw)
   tweets <- tweets_raw$text
   rt_filter <- TRUE
   reply_filter <- TRUE
