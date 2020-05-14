@@ -31,20 +31,22 @@ tweet_gettr <- function(handle, token = NULL, output = "", n = 3200,
   }
 
   tweets_raw <- as.data.frame(rtweet::get_timeline(handle, token = token, n = 3200))
+  print("Number of Tweets Found")
+  print(ncol(tweets_raw))
+  if (ncol(tweets_raw) == 0) {
+    return("No Tweets Found")
+  }
 
   tweets <- tweets_raw$text
   rt_filter <- TRUE
   reply_filter <- TRUE
   if (!includeRts) {
-    print("excluding rts")
     rt_filter <- !(tweets_raw$is_retweet)
   }
 
   if (!includeReplies) {
-    print("excluding replies")
     reply_filter <- is.na(tweets_raw$reply_to_screen_name)
   }
-  print('done')
   tweets <- tweets[rt_filter & reply_filter]
 
   tweets <- stringr::str_replace_all(tweets, "\n", " newline ")
