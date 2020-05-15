@@ -1,15 +1,15 @@
 Package: mRkov
 Title: Makes Markov Chains from Tweets
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R:
-    person(given = "Thomas",
+    c(person(given = "Thomas",
            family = "Serrano",
            role = c("aut", "cre"),
-           email = "serrat@uw.edu",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+           email = "serrat@uw.edu"),
+           person("Bryan D", "Martin", email = "bmartin6@uw.edu", role = "aut"))
+Description: This package scrapes data from a Twitter handle and generates tweets mimicking the text speech patterns of that handle.
 Depends: R (>= 3.2)
-License: GPL (>= 2)
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0
